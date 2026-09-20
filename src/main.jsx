@@ -803,7 +803,6 @@ function Home({ onSelectProject }) {
 
 function ProjectsPreview({ onSelectProject }) {
   const [pairIndex, setPairIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
   const [fade, setFade] = useState(true);
 
   // Rotate through 3 pairs of featured projects
@@ -814,36 +813,18 @@ function ProjectsPreview({ onSelectProject }) {
   ];
 
   useEffect(() => {
-    if (isPaused) return;
     const timer = setInterval(() => {
       setFade(false);
       setTimeout(() => {
         setPairIndex((prev) => (prev + 1) % pairs.length);
         setFade(true);
       }, 300);
-    }, 4500);
+    }, 4000);
 
     return () => clearInterval(timer);
-  }, [isPaused, pairs.length]);
+  }, [pairs.length]);
 
   const currentPair = pairs[pairIndex];
-
-  const changeSlide = (newIndex) => {
-    if (newIndex === pairIndex) return;
-    setFade(false);
-    setTimeout(() => {
-      setPairIndex(newIndex);
-      setFade(true);
-    }, 300);
-  };
-
-  const handleNext = () => {
-    changeSlide((pairIndex + 1) % pairs.length);
-  };
-
-  const handlePrev = () => {
-    changeSlide((pairIndex - 1 + pairs.length) % pairs.length);
-  };
 
   return (
     <section className="projects-preview">
@@ -855,31 +836,9 @@ function ProjectsPreview({ onSelectProject }) {
           <Eyebrow light>Selected work</Eyebrow>
           <h2>Proven under<br /><em>pressure.</em></h2>
         </div>
-
-        <div className="project-controls-wrap">
-          <div className="carousel-nav-group">
-            <button onClick={handlePrev} className="carousel-arrow" aria-label="Previous project">←</button>
-            <div className="carousel-dots">
-              {pairs.map((_, idx) => (
-                <button
-                  key={idx}
-                  className={`carousel-dot ${idx === pairIndex ? 'active' : ''}`}
-                  onClick={() => changeSlide(idx)}
-                  aria-label={`Go to project slide ${idx + 1}`}
-                />
-              ))}
-            </div>
-            <button onClick={handleNext} className="carousel-arrow" aria-label="Next project">→</button>
-          </div>
-          <Button to="/projects" light>View all projects</Button>
-        </div>
       </div>
 
-      <div
-        className={`project-feature-grid ${fade ? 'fade-in' : 'fade-out'}`}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
+      <div className={`project-feature-grid ${fade ? 'fade-in' : 'fade-out'}`}>
         <article
           className="project-feature large"
           onClick={() => onSelectProject(currentPair[0])}
