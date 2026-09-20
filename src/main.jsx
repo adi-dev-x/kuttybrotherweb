@@ -975,34 +975,35 @@ function Capabilities({ onSelectMfgItem }) {
         </div>
       </section>
 
-      {/* 29 Products Grid using actual manufac images */}
+      {/* 29 Manufacturing, IBR Components & Services Items Grid */}
       <section className="section" style={{ paddingTop: '0' }}>
-        <div className="project-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: '24px' }}>
+        <div className="mfg-card-grid">
           {filteredItems.map((item, idx) => (
             <article
-              className="sector-project-card"
+              className="mfg-card"
               data-reveal
               key={item.id}
               onClick={() => onSelectMfgItem(item)}
-              style={{ cursor: 'pointer', minHeight: '390px' }}
             >
-              <div className="sector-card-top">
-                <span>{String(idx + 1).padStart(2, '0')}</span>
-                <span style={{ textTransform: 'uppercase' }}>{item.cat}</span>
-              </div>
-              <div style={{ overflow: 'hidden', height: '190px', borderRadius: '6px', margin: '16px 0', background: '#f7f6f1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div className="mfg-card-image-box">
+                <span className="mfg-index-badge">{String(idx + 1).padStart(2, '0')}</span>
+                <span className="mfg-cat-badge">{item.cat}</span>
                 <img
                   src={item.image}
                   alt={item.title}
+                  className="mfg-card-img"
                   loading="lazy"
-                  style={{ width: '100%', height: '100%', objectFit: 'contain', transition: 'transform 0.4s ease' }}
                 />
               </div>
-              <h3 style={{ fontSize: '22px', margin: '12px 0 8px' }}>{item.title}</h3>
-              <p style={{ fontSize: '13px', color: '#666', lineHeight: '1.5', margin: '0 0 16px' }}>{item.desc}</p>
-              <div className="sector-card-bottom">
-                <span>Request Specifications</span>
-                <Arrow />
+              <div className="mfg-card-body">
+                <div>
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+                <div className="mfg-card-footer">
+                  <span>Request Specifications</span>
+                  <Arrow />
+                </div>
               </div>
             </article>
           ))}
