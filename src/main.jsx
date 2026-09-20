@@ -153,12 +153,12 @@ const manufacturingItems = [
 ];
 
 const equipment = [
-  { id: 'eq1', title: 'Motorised Winches', detail: 'Heavy-duty winch systems up to 100 T capacity with dual braking.', icon: '↗', capacity: 'Up to 100 T' },
-  { id: 'eq2', title: 'Hydraulic Jacks', detail: 'High-tonnage synchronous lifting hydraulic jacks.', icon: '⊞', capacity: 'Up to 400 T' },
-  { id: 'eq3', title: 'Rolling Machines', detail: '3-roller precision bending machines for heavy SS & MS plates.', icon: '○', capacity: 'Up to 36 mm' },
-  { id: 'eq4', title: 'Welding Systems', detail: 'Industrial multi-process MIG / TIG / K320 automatic welding plants.', icon: '⌁', capacity: 'Certified IBR' },
-  { id: 'eq5', title: 'Tank Jacks', detail: 'Specialised hydraulic tank erection jacking equipment.', icon: '↟', capacity: 'Up to 12 T / 2.5 m' },
-  { id: 'eq6', title: 'Air Compressors', detail: 'High-pressure diesel and electric industrial air compressor fleet.', icon: '◒', capacity: 'Up to 40 hp' },
+  { id: 'eq1', title: 'Motorised Winches', detail: 'Heavy-duty winch systems up to 100 T capacity with dual braking.', icon: '↗', capacity: 'Up to 100 T', image: '/images/equipment/winch.jpg' },
+  { id: 'eq2', title: 'Hydraulic Jacks', detail: 'High-tonnage synchronous lifting hydraulic jacks.', icon: '⊞', capacity: 'Up to 400 T', image: '/images/equipment/jack.jpg' },
+  { id: 'eq3', title: 'Rolling Machines', detail: '3-roller precision bending machines for heavy SS & MS plates.', icon: '○', capacity: 'Up to 36 mm', image: '/images/equipment/roller.jpg' },
+  { id: 'eq4', title: 'Welding Systems', detail: 'Industrial multi-process MIG / TIG / K320 automatic welding plants.', icon: '⌁', capacity: 'Certified IBR', image: '/images/equipment/welder.jpg' },
+  { id: 'eq5', title: 'Tank Jacks', detail: 'Specialised hydraulic tank erection jacking equipment.', icon: '↟', capacity: 'Up to 12 T / 2.5 m', image: '/images/equipment/tankjack.jpg' },
+  { id: 'eq6', title: 'Air Compressors', detail: 'High-pressure diesel and electric industrial air compressor fleet.', icon: '◒', capacity: 'Up to 40 hp', image: '/images/equipment/compressor.jpg' },
 ];
 
 function useReveal(dependency) {
@@ -203,6 +203,54 @@ function useReveal(dependency) {
       cancelAnimationFrame(req);
       if (safetyTimer) clearTimeout(safetyTimer);
       if (observer) observer.disconnect();
+    };
+  }, [dependency]);
+}
+
+function useBannerScroll(dependency) {
+  useEffect(() => {
+    let animationFrameId;
+
+    const onScroll = () => {
+      animationFrameId = requestAnimationFrame(() => {
+        const scY = window.scrollY;
+
+        // 1. Home Hero parallax scroll effect
+        const heroImg = document.querySelector('.hero-image');
+        const heroContent = document.querySelector('.hero-content');
+        if (heroImg && scY <= 900) {
+          heroImg.style.transform = `translate3d(0, ${scY * 0.38}px, 0) scale(${1 + scY * 0.0003})`;
+        }
+        if (heroContent && scY <= 900) {
+          heroContent.style.transform = `translate3d(0, ${scY * 0.18}px, 0)`;
+          heroContent.style.opacity = `${Math.max(0, 1 - scY / 650)}`;
+        }
+
+        // 2. PageHero parallax scroll effect (About, Projects, Equipment, etc.)
+        const pageHeroImg = document.querySelector('.page-hero-image');
+        const pageHeroContent = document.querySelector('.page-hero-content');
+        if (pageHeroImg && scY <= 700) {
+          pageHeroImg.style.transform = `translate3d(0, ${scY * 0.38}px, 0) scale(${1 + scY * 0.00035})`;
+        }
+        if (pageHeroContent && scY <= 700) {
+          pageHeroContent.style.transform = `translate3d(0, ${scY * 0.18}px, 0)`;
+          pageHeroContent.style.opacity = `${Math.max(0, 1 - scY / 550)}`;
+        }
+
+        // 3. Contact Hero parallax scroll effect
+        const contactHero = document.querySelector('.contact-hero');
+        if (contactHero && scY <= 600) {
+          contactHero.style.transform = `translate3d(0, ${scY * 0.15}px, 0)`;
+        }
+      });
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (animationFrameId) cancelAnimationFrame(animationFrameId);
     };
   }, [dependency]);
 }
@@ -260,6 +308,7 @@ function Logo() {
     <a href="/" className="brand" onClick={(e) => navigate(e, '/')} aria-label="Kutty Brothers home">
       <img src="/images/kutty-logo.jpg" alt="Kutty Brothers" className="brand-logo-img" />
       <span className="brand-name">KUTTY<br />BROTHERS</span>
+      <span className="brand-est-pill"><span className="est-dot"></span>SINCE 1982</span>
     </a>
   );
 }
@@ -591,10 +640,9 @@ function HeroSection() {
       <div className="hero-image" ref={heroImageRef}></div>
       <div className="hero-grain"></div>
       <div className="hero-content">
-        <div className="status-pill">
-          <span className="pulse"></span> Operational Across India
+        <div className="hero-since-badge">
+          <span className="pulse"></span> <span>ESTABLISHED</span> <strong>SINCE 1982</strong> <span className="hero-badge-tag">• 44 YEARS OF EXCELLENCE</span>
         </div>
-        <Eyebrow light>Engineering excellence since 1982</Eyebrow>
         <h1>
           Built for the<br />
           <em>work that matters.</em>
@@ -612,7 +660,7 @@ function HeroSection() {
 
       <div className="hero-stamp">
         <span>KB</span>
-        <small>Since<br />1982</small>
+        <small>EST.<br /><strong>1982</strong></small>
       </div>
     </section>
   );
@@ -633,10 +681,6 @@ function Home({ onSelectProject }) {
           <p>From plant construction and boiler components to specialized equipment and shutdown support, we bring skilled people, reliable systems and an unwavering standard of safety to every site.</p>
           <Button to="/about">Our story</Button>
         </div>
-        <div className="statement" data-reveal>
-          <span>KB</span>
-          <p>QUALITY<br />WITHOUT<br /><em>COMPROMISE.</em></p>
-        </div>
       </section>
 
       <section className="numbers">
@@ -645,8 +689,9 @@ function Home({ onSelectProject }) {
           <Eyebrow light>At a glance</Eyebrow>
           <div className="stats">
             <div>
-              <AnimatedCounter end="42" suffix="+" />
+              <AnimatedCounter end="44" suffix="+" />
               <span>Years of<br />experience</span>
+              <span className="since-year-sub">EST. 1982</span>
             </div>
             <div>
               <AnimatedCounter end="15" suffix="+" />
@@ -709,7 +754,7 @@ function Home({ onSelectProject }) {
         <div className="client-showcase-foot section" data-reveal>
           <span>01 — 05</span>
           <p>Leading Industrial Partners & Institutions</p>
-          <span>Established 1982</span>
+          <span className="since-highlight-badge">★ ESTABLISHED SINCE 1982 ★</span>
         </div>
       </section>
 
@@ -723,19 +768,18 @@ function Home({ onSelectProject }) {
         </div>
         <div className="service-list">
           {[
-            ['01', 'Fabrication & erection', 'Precision execution for process plants, heavy structures and critical industrial systems.'],
-            ['02', 'IBR components', 'Certified boiler components, pressure vessels and technical repair services.'],
-            ['03', 'Operation & maintenance', 'Planned turnarounds and emergency support that keeps your operations on track.'],
-            ['04', 'Equipment hire', 'A capable fleet of lifting winches, hydraulic jacks, rolling and welding equipment.']
-          ].map(([number, title, text]) => (
+            ['Fabrication & erection', 'Precision execution for process plants, heavy structures and critical industrial systems.'],
+            ['IBR components', 'Certified boiler components, pressure vessels and technical repair services.'],
+            ['Operation & maintenance', 'Planned turnarounds and emergency support that keeps your operations on track.'],
+            ['Equipment hire', 'A capable fleet of lifting winches, hydraulic jacks, rolling and welding equipment.']
+          ].map(([title, text]) => (
             <a
               href="/capabilities"
               onClick={(e) => navigate(e, '/capabilities')}
               className="service-row"
-              key={number}
+              key={title}
               data-reveal
             >
-              <span className="service-number">{number}</span>
               <h3>{title}</h3>
               <p>{text}</p>
               <Arrow />
@@ -758,37 +802,105 @@ function Home({ onSelectProject }) {
 }
 
 function ProjectsPreview({ onSelectProject }) {
+  const [pairIndex, setPairIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [fade, setFade] = useState(true);
+
+  // Rotate through 3 pairs of featured projects
+  const pairs = [
+    [projects[0], projects[2]], // Nuclear (Kudankulam) & Aerospace (ISRO)
+    [projects[1], projects[3]], // Thermal (Neyveli) & Carbon (Birla Carbon)
+    [projects[4], projects[5]], // Cement (UltraTech) & Heavy Engineering (L&T)
+  ];
+
+  useEffect(() => {
+    if (isPaused) return;
+    const timer = setInterval(() => {
+      setFade(false);
+      setTimeout(() => {
+        setPairIndex((prev) => (prev + 1) % pairs.length);
+        setFade(true);
+      }, 300);
+    }, 4500);
+
+    return () => clearInterval(timer);
+  }, [isPaused, pairs.length]);
+
+  const currentPair = pairs[pairIndex];
+
+  const changeSlide = (newIndex) => {
+    if (newIndex === pairIndex) return;
+    setFade(false);
+    setTimeout(() => {
+      setPairIndex(newIndex);
+      setFade(true);
+    }, 300);
+  };
+
+  const handleNext = () => {
+    changeSlide((pairIndex + 1) % pairs.length);
+  };
+
+  const handlePrev = () => {
+    changeSlide((pairIndex - 1 + pairs.length) % pairs.length);
+  };
+
   return (
     <section className="projects-preview">
       <div className="project-preview-top section" data-reveal>
         <div>
+          <div className="project-auto-badge">
+            <span className="est-dot"></span> LIVE FEATURED PROJECTS
+          </div>
           <Eyebrow light>Selected work</Eyebrow>
           <h2>Proven under<br /><em>pressure.</em></h2>
         </div>
-        <Button to="/projects" light>View all projects</Button>
+
+        <div className="project-controls-wrap">
+          <div className="carousel-nav-group">
+            <button onClick={handlePrev} className="carousel-arrow" aria-label="Previous project">←</button>
+            <div className="carousel-dots">
+              {pairs.map((_, idx) => (
+                <button
+                  key={idx}
+                  className={`carousel-dot ${idx === pairIndex ? 'active' : ''}`}
+                  onClick={() => changeSlide(idx)}
+                  aria-label={`Go to project slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+            <button onClick={handleNext} className="carousel-arrow" aria-label="Next project">→</button>
+          </div>
+          <Button to="/projects" light>View all projects</Button>
+        </div>
       </div>
-      <div className="project-feature-grid">
+
+      <div
+        className={`project-feature-grid ${fade ? 'fade-in' : 'fade-out'}`}
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+      >
         <article
           className="project-feature large"
-          data-reveal
-          onClick={() => onSelectProject(projects[0])}
+          onClick={() => onSelectProject(currentPair[0])}
         >
-          <img src={projects[0].image} alt="Industrial energy facility" loading="lazy" />
+          <img src={currentPair[0].image} alt={currentPair[0].title} loading="lazy" key={`img1-${currentPair[0].id}`} />
           <div>
-            <span>{projects[0].kicker}</span>
-            <h3>{projects[0].title}</h3>
+            <span>{currentPair[0].kicker}</span>
+            <h3>{currentPair[0].title}</h3>
+            <p className="project-meta-line">{currentPair[0].client} • {currentPair[0].location}</p>
             <Arrow />
           </div>
         </article>
         <article
           className="project-feature"
-          data-reveal
-          onClick={() => onSelectProject(projects[2])}
+          onClick={() => onSelectProject(currentPair[1])}
         >
-          <img src={projects[2].image} alt="Space launch engineering" loading="lazy" />
+          <img src={currentPair[1].image} alt={currentPair[1].title} loading="lazy" key={`img2-${currentPair[1].id}`} />
           <div>
-            <span>{projects[2].kicker}</span>
-            <h3>{projects[2].title}</h3>
+            <span>{currentPair[1].kicker}</span>
+            <h3>{currentPair[1].title}</h3>
+            <p className="project-meta-line">{currentPair[1].client} • {currentPair[1].location}</p>
             <Arrow />
           </div>
         </article>
@@ -934,14 +1046,7 @@ function Capabilities({ onSelectMfgItem }) {
 
   return (
     <>
-      <PageHero
-        eyebrow="Manufacturing, IBR Components & Services"
-        title={<>Precision fabrication.<br /><em>Certified engineering.</em></>}
-        text="A comprehensive 29-product suite of heavy vessels, IBR boiler components, chemical reactors, towers, and industrial steel structures."
-        image="/images/manufac/industrial-sheds.jpg"
-      />
-
-      <section className="section capability-intro">
+      <section className="section capability-intro" style={{ paddingTop: '150px' }}>
         <div data-reveal>
           <Eyebrow>End-to-End Manufacturing & Services</Eyebrow>
           <h2>29 Specialized<br /><em>Industrial Offerings.</em></h2>
@@ -978,7 +1083,7 @@ function Capabilities({ onSelectMfgItem }) {
       {/* 29 Manufacturing, IBR Components & Services Items Grid */}
       <section className="section" style={{ paddingTop: '0' }}>
         <div className="mfg-card-grid">
-          {filteredItems.map((item, idx) => (
+          {filteredItems.map((item) => (
             <article
               className="mfg-card"
               data-reveal
@@ -986,8 +1091,6 @@ function Capabilities({ onSelectMfgItem }) {
               onClick={() => onSelectMfgItem(item)}
             >
               <div className="mfg-card-image-box">
-                <span className="mfg-index-badge">{String(idx + 1).padStart(2, '0')}</span>
-                <span className="mfg-cat-badge">{item.cat}</span>
                 <img
                   src={item.image}
                   alt={item.title}
@@ -1182,13 +1285,18 @@ function Equipment({ onRequestEquipment }) {
       <section className="equipment-grid section">
         {filteredEquipment.map((item, i) => (
           <article className="equipment-card" data-reveal key={item.id}>
-            <span className="eq-count">0{i + 1} / {item.capacity}</span>
-            <div className="eq-icon">{item.icon}</div>
-            <h3>{item.title}</h3>
-            <p>{item.detail}</p>
-            <button type="button" onClick={() => onRequestEquipment(item)}>
-              Check availability <Arrow />
-            </button>
+            <div className="equipment-card-image-box">
+              <span className="eq-count">0{i + 1} / {item.capacity}</span>
+              <img src={item.image} alt={item.title} className="equipment-card-img" loading="lazy" />
+            </div>
+            <div className="equipment-card-body">
+              <div className="eq-icon">{item.icon}</div>
+              <h3>{item.title}</h3>
+              <p>{item.detail}</p>
+              <button type="button" onClick={() => onRequestEquipment(item)}>
+                Check availability <Arrow />
+              </button>
+            </div>
           </article>
         ))}
       </section>
@@ -1306,6 +1414,9 @@ function PageHero({ eyebrow, title, text, image }) {
       <div className="page-hero-image" style={{ backgroundImage: `url(${image})` }}></div>
       <div className="page-hero-shade"></div>
       <div className="page-hero-content">
+        <div className="page-hero-since-tag">
+          <span className="est-dot"></span> ESTABLISHED SINCE 1982
+        </div>
         <Eyebrow light>{eyebrow}</Eyebrow>
         <h1>{title}</h1>
         <p>{text}</p>
@@ -1319,7 +1430,10 @@ function Footer() {
     <footer>
       <div className="footer-main">
         <div>
-          <Logo />
+          <div className="footer-brand-wrap">
+            <Logo />
+            <span className="since-highlight-badge footer-since-badge">ESTABLISHED SINCE 1982</span>
+          </div>
           <p>Precision manufacturing, heavy fabrication, boiler components and dependable industrial services since 1982.</p>
         </div>
         <div className="footer-links">
@@ -1341,7 +1455,7 @@ function Footer() {
       </div>
       <div className="footer-base">
         <span>© {new Date().getFullYear()} Kutty Brothers. All rights reserved.</span>
-        <span>Chennai, Tamil Nadu, India</span>
+        <span>ESTABLISHED SINCE 1982 • CHENNAI, INDIA</span>
         <a href="#top">Back to top ↑</a>
       </div>
     </footer>
@@ -1356,6 +1470,7 @@ function MainApp() {
   const { addToast } = useToast();
 
   useReveal(path);
+  useBannerScroll(path);
 
   useEffect(() => {
     const update = () => {
