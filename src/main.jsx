@@ -96,7 +96,7 @@ const projects = [
 const sectorPortfolio = [
   { title: 'Aerospace industry projects', projects: ['ISRO (Indian Space Research Organisation)'], image: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1000&q=80&fm=webp' },
   { title: 'Nuclear power projects', projects: ['Kudankulam Nuclear Power Plant', 'Kalpakkam Atomic Power Plant'], image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1000&q=80&fm=webp' },
-  { title: 'Thermal power projects', projects: ['LVS Power Plant', 'Ind-Barath Power Gencom Limited', 'Cauvery Power Generation Chennai (P) Ltd.', 'BGR Energy Systems Ltd.', 'Lanco Industries Ltd.', 'Neyveli Lignite Corporation'], image: 'https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { title: 'Thermal power projects', projects: ['LVS Power Plant', 'Ind-Barath Power Gencom Limited', 'Cauvery Power Generation Chennai (P) Ltd.', 'BGR Energy Systems Ltd.', 'Lanco Industries Ltd.', 'Neyveli Lignite Corporation'], image: '/images/manufac/chimney-stack.jpg' },
   { title: 'Cement industry projects', projects: ['ACC Cement Plant', 'UltraTech Cements (L&T)'], image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80&fm=webp' },
   { title: 'Chemical industry projects', projects: ['Adheeswara Chemicals Pvt. Ltd.', 'Coromandel Indarc', 'Coromandel International Limited', 'Coromandel Fertilisers Limited', 'Kamar Chemicals & Ind. Limited', 'Keerthi (Bangalore) Pvt. Ltd.', 'Krishna Chemicals & Ind. Limited', 'Royalaseema Hi-Strength Alkalis Ltd.'], image: '/images/manufac/reactors.jpg' },
   { title: 'Water & effluent treatment plant projects', projects: ['Quality Water Management'], image: '/images/manufac/cartridge-filter-tanks.jpg' },
@@ -165,44 +165,62 @@ function useReveal(dependency) {
   useEffect(() => {
     let observer;
     let safetyTimer;
+    let fallbackTimer;
+    let mutationObserver;
 
-    const revealAll = () => {
-      const elements = document.querySelectorAll('[data-reveal]');
-      observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer.unobserve(entry.target);
-            }
-          });
-        },
-        { threshold: 0.02, rootMargin: '100px 0px' }
-      );
-
-      elements.forEach((item) => {
-        const rect = item.getBoundingClientRect();
-        if (rect.top <= (window.innerHeight || document.documentElement.clientHeight) + 150) {
-          item.classList.add('is-visible');
-        } else {
-          observer.observe(item);
+    const checkElements = () => {
+      const vh = window.innerHeight || document.documentElement.clientHeight || 800;
+      document.querySelectorAll('[data-reveal]:not(.is-visible)').forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= vh + 200) {
+          el.classList.add('is-visible');
+        } else if (observer) {
+          observer.observe(el);
         }
       });
     };
 
-    const req = requestAnimationFrame(() => {
-      revealAll();
-      safetyTimer = setTimeout(() => {
-        document.querySelectorAll('[data-reveal]').forEach((el) => {
-          el.classList.add('is-visible');
+    observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
         });
-      }, 250);
+      },
+      { threshold: 0.01, rootMargin: '180px 0px' }
+    );
+
+    checkElements();
+    const req = requestAnimationFrame(checkElements);
+
+    window.addEventListener('scroll', checkElements, { passive: true });
+    window.addEventListener('resize', checkElements, { passive: true });
+
+    safetyTimer = setTimeout(() => {
+      checkElements();
+    }, 150);
+
+    fallbackTimer = setTimeout(() => {
+      document.querySelectorAll('[data-reveal]').forEach((el) => {
+        el.classList.add('is-visible');
+      });
+    }, 450);
+
+    mutationObserver = new MutationObserver(() => {
+      checkElements();
     });
+    mutationObserver.observe(document.body, { childList: true, subtree: true });
 
     return () => {
       cancelAnimationFrame(req);
       if (safetyTimer) clearTimeout(safetyTimer);
+      if (fallbackTimer) clearTimeout(fallbackTimer);
       if (observer) observer.disconnect();
+      if (mutationObserver) mutationObserver.disconnect();
+      window.removeEventListener('scroll', checkElements);
+      window.removeEventListener('resize', checkElements);
     };
   }, [dependency]);
 }
@@ -308,7 +326,6 @@ function Logo() {
     <a href="/" className="brand" onClick={(e) => navigate(e, '/')} aria-label="Kutty Brothers home">
       <img src="/images/kutty-logo.jpg" alt="Kutty Brothers" className="brand-logo-img" />
       <span className="brand-name">KUTTY<br />BROTHERS</span>
-      <span className="brand-est-pill"><span className="est-dot"></span>SINCE 1982</span>
     </a>
   );
 }
@@ -640,9 +657,6 @@ function HeroSection() {
       <div className="hero-image" ref={heroImageRef}></div>
       <div className="hero-grain"></div>
       <div className="hero-content">
-        <div className="hero-since-badge">
-          <span className="pulse"></span> <span>ESTABLISHED</span> <strong>SINCE 1982</strong> <span className="hero-badge-tag">• 44 YEARS OF EXCELLENCE</span>
-        </div>
         <h1>
           Built for the<br />
           <em>work that matters.</em>
@@ -656,11 +670,6 @@ function HeroSection() {
           <span className="mouse"><i></i></span>Scroll to discover
         </div>
         <div className="hero-coordinate">13°04′ N&nbsp;&nbsp; 80°11′ E — CHENNAI</div>
-      </div>
-
-      <div className="hero-stamp">
-        <span>KB</span>
-        <small>EST.<br /><strong>1982</strong></small>
       </div>
     </section>
   );
@@ -751,11 +760,6 @@ function Home({ onSelectProject }) {
             </div>
           </div>
         </div>
-        <div className="client-showcase-foot section" data-reveal>
-          <span>01 — 05</span>
-          <p>Leading Industrial Partners & Institutions</p>
-          <span className="since-highlight-badge">★ ESTABLISHED SINCE 1982 ★</span>
-        </div>
       </section>
 
       <section className="services section">
@@ -766,7 +770,7 @@ function Home({ onSelectProject }) {
           </div>
           <Button to="/capabilities">Manufacturing & IBR</Button>
         </div>
-        <div className="service-list">
+        <div className="service-list" data-reveal>
           {[
             ['Fabrication & erection', 'Precision execution for process plants, heavy structures and critical industrial systems.'],
             ['IBR components', 'Certified boiler components, pressure vessels and technical repair services.'],
@@ -778,7 +782,6 @@ function Home({ onSelectProject }) {
               onClick={(e) => navigate(e, '/capabilities')}
               className="service-row"
               key={title}
-              data-reveal
             >
               <h3>{title}</h3>
               <p>{text}</p>
@@ -790,14 +793,153 @@ function Home({ onSelectProject }) {
 
       <ProjectsPreview onSelectProject={onSelectProject} />
 
-      <section className="contact-band">
-        <div data-reveal>
-          <Eyebrow light>Let’s build</Eyebrow>
-          <h2>Bring us your<br /><em>toughest brief.</em></h2>
-        </div>
-        <Button to="/contact" light>Start a conversation</Button>
-      </section>
+      <HomeContactSection />
     </>
+  );
+}
+
+function HomeContactSection() {
+  const [submitted, setSubmitted] = useState(false);
+  const { addToast } = useToast();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setSubmitted(true);
+    if (addToast) {
+      addToast('Your project brief has been submitted successfully! Our engineering team will follow up within 24 hours.');
+    }
+  }
+
+  return (
+    <section className="contact-band" id="brief">
+      <div className="contact-band-content" data-reveal>
+        <div className="contact-band-text">
+          <div className="contact-band-eyebrow">
+            <span className="contact-band-dash"></span>
+            LET’S BUILD
+          </div>
+          <h2>
+            Bring us your<br />
+            <em>toughest brief.</em>
+          </h2>
+          <p className="contact-band-desc">
+            Have a demanding fabrication tolerance, certified IBR boiler component requirement, urgent turnaround shutdown, or heavy equipment hire need? Submit your specifications directly to our engineering desk.
+          </p>
+
+          <div className="contact-band-meta-list">
+            <a href="tel:+914426521027" className="contact-band-meta-item">
+              <span className="meta-icon">📞</span>
+              <div>
+                <span className="meta-sub">Direct Engineering Line</span>
+                <strong>+91 44 2652 1027</strong>
+              </div>
+            </a>
+            <a href="mailto:info@kuttybrothers.in" className="contact-band-meta-item">
+              <span className="meta-icon">✉️</span>
+              <div>
+                <span className="meta-sub">Email RFQ & Drawings</span>
+                <strong>info@kuttybrothers.in</strong>
+              </div>
+            </a>
+            <div className="contact-band-meta-item">
+              <span className="meta-icon">📍</span>
+              <div>
+                <span className="meta-sub">Works & Headquarters</span>
+                <strong>Athipet, Chennai, TN 600058</strong>
+              </div>
+            </div>
+          </div>
+
+          <div className="contact-band-trust-pills">
+            <span className="trust-pill">⚡ 24h Engineering Review</span>
+            <span className="trust-pill">🔒 Strict Confidentiality & NDA</span>
+            <span className="trust-pill">✓ Certified IBR & ISO Quality</span>
+          </div>
+        </div>
+
+        <div className="contact-band-form-container">
+          <div className="contact-band-card">
+            {submitted ? (
+              <div className="contact-band-success">
+                <div className="contact-success-badge">✓</div>
+                <h3>Brief Submitted</h3>
+                <p>
+                  Thank you! Your project requirements have been routed directly to our senior engineering desk. We will evaluate your specifications and get in touch within 24 hours.
+                </p>
+                <button
+                  type="button"
+                  className="contact-band-reset-btn"
+                  onClick={() => setSubmitted(false)}
+                >
+                  Send another enquiry <Arrow />
+                </button>
+              </div>
+            ) : (
+              <form className="contact-band-form" onSubmit={handleSubmit}>
+                <div className="contact-band-form-header">
+                  <span className="form-kicker">DIRECT RFQ / BRIEF</span>
+                  <h3>Start a conversation</h3>
+                  <p>Submit your project requirements below to receive technical evaluation and quotation.</p>
+                </div>
+
+                <div className="contact-band-grid-row">
+                  <label className="contact-band-field" htmlFor="brief-name">
+                    <span>Your Name *</span>
+                    <input id="brief-name" name="name" type="text" required placeholder="e.g. Rajesh Kumar" />
+                  </label>
+                  <label className="contact-band-field" htmlFor="brief-company">
+                    <span>Company / Organisation *</span>
+                    <input id="brief-company" name="company" type="text" required placeholder="e.g. NPCIL, L&T, UltraTech" />
+                  </label>
+                </div>
+
+                <div className="contact-band-grid-row">
+                  <label className="contact-band-field" htmlFor="brief-email">
+                    <span>Work Email *</span>
+                    <input id="brief-email" name="email" type="email" required placeholder="name@company.com" />
+                  </label>
+                  <label className="contact-band-field" htmlFor="brief-phone">
+                    <span>Phone Number *</span>
+                    <input id="brief-phone" name="phone" type="tel" required placeholder="+91 98765 43210" />
+                  </label>
+                </div>
+
+                <label className="contact-band-field" htmlFor="brief-category">
+                  <span>Service / Requirement Category</span>
+                  <select id="brief-category" name="category" defaultValue="Structural Fabrication & Erection">
+                    <option value="Structural Fabrication & Erection">Heavy Structural Fabrication & Erection</option>
+                    <option value="Certified IBR Boiler Components">Certified IBR Boiler Components & Pressure Vessels</option>
+                    <option value="Heavy Equipment & Winch Rental">Heavy Equipment & Winch Rental</option>
+                    <option value="Operation & Turnaround Maintenance">Plant Shutdown & Turnaround Maintenance</option>
+                    <option value="General Engineering Brief">General Engineering Enquiry / Other</option>
+                  </select>
+                </label>
+
+                <label className="contact-band-field" htmlFor="brief-scope">
+                  <span>Project Scope & Specifications *</span>
+                  <textarea
+                    id="brief-scope"
+                    name="scope"
+                    required
+                    rows="3"
+                    placeholder="Describe tonnage, dimensions, material grade, site location, timeline or equipment needed..."
+                  ></textarea>
+                </label>
+
+                <label className="contact-band-consent" htmlFor="brief-consent">
+                  <input id="brief-consent" name="consent" type="checkbox" required />
+                  <span>I agree to receive direct technical correspondence regarding this project brief.</span>
+                </label>
+
+                <button id="brief-submit-btn" type="submit" className="contact-band-submit-btn">
+                  Start a conversation <Arrow />
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -878,12 +1020,32 @@ function About() {
         image="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1600&q=80&fm=webp"
       />
       <section className="section story">
-        <div data-reveal>
+        <div className="story-media" data-reveal>
           <Eyebrow>Our beginning</Eyebrow>
-          <h2>A family business.<br />An industry <em>institution.</em></h2>
+          <div className="story-founder-card">
+            <div className="story-founder-frame">
+              <img
+                src="/images/ismail-founder.jpeg"
+                alt="DR (HONS) ISMAIL.K, Founder of Kutty Brothers"
+                loading="lazy"
+              />
+              <div className="story-founder-overlay"></div>
+              <div className="story-founder-badge">
+                <span className="founder-badge-dot"></span>
+                <span>DR (HONS) ISMAIL.K // FOUNDER (1982)</span>
+              </div>
+            </div>
+            <div className="story-founder-caption">
+              <div>
+                <strong>DR (HONS) ISMAIL.K</strong>
+                <small>Founder of Kutty Brothers</small>
+              </div>
+              <span className="story-caption-year">EST. 1982</span>
+            </div>
+          </div>
         </div>
         <div className="story-copy" data-reveal>
-          <p className="lead">Kutty Brothers was founded in 1982 by Mr. Ismail K and his brothers with a clear ambition: deliver work industrial clients could depend on.</p>
+          <p className="lead">Kutty Brothers was founded in 1982 by DR (HONS) ISMAIL.K and his brothers with a clear ambition: deliver work industrial clients could depend on.</p>
           <p>Starting with fabrication and erection, KB steadily expanded into tools and machinery hire, cranes, boiler repairs, and the manufacture of boiler components and pressure vessels. Today, we operate across hydrocarbon, power, chemical, aerospace, steel, cement and more.</p>
           <p>We remain guided by the same standards: careful project control, motivated people and quality that holds up long after handover.</p>
         </div>
@@ -908,20 +1070,138 @@ function About() {
 }
 
 function Timeline() {
+  const [activeEra, setActiveEra] = useState(0);
+
+  const eras = [
+    {
+      phase: '01 / 04',
+      badge: 'FOUNDATION',
+      year: '1982',
+      title: 'The beginning',
+      text: 'KB is founded to undertake structural fabrication and site erection projects.',
+      highlights: ['Structural Steel Fabrication', 'Site Erection & Rigging', 'Heavy Industrial Frames'],
+      stat: 'EST. 1982',
+      metric: 'Foundation',
+      image: '/images/manufac/industrial-sheds.jpg'
+    },
+    {
+      phase: '02 / 04',
+      badge: 'FLEET & CRANES',
+      year: '1990s',
+      title: 'A broader capability',
+      text: 'The business expands into equipment, heavy winch machinery and crane hire.',
+      highlights: ['Heavy Winches to 100T', 'Hydraulic Jack Fleet', 'Heavy Crane Operations'],
+      stat: '100 T',
+      metric: 'Winch Systems',
+      image: '/images/equipment/winch.jpg'
+    },
+    {
+      phase: '03 / 04',
+      badge: 'SPECIALISATION',
+      year: '2000s',
+      title: 'Technical depth',
+      text: 'Boiler repairs, IBR components and pressure vessels become core strengths.',
+      highlights: ['Certified IBR Standards', 'High-Pressure Vessels', 'Thermal Columns & ESP'],
+      stat: 'IBR WELDING',
+      metric: 'Coded Standards',
+      image: '/images/manufac/ibr.jpg'
+    },
+    {
+      phase: '04 / 04',
+      badge: 'STRATEGIC PARTNER',
+      year: 'Today',
+      title: 'A trusted partner',
+      text: 'KB supports India’s leading nuclear, aerospace and power industrial projects.',
+      highlights: ['ISRO Space Hardware', 'Nuclear Plant Installations', 'Turnkey Heavy Projects'],
+      stat: '42+ YEARS',
+      metric: 'National Trust',
+      image: '/images/manufac/launching-pads.jpg'
+    }
+  ];
+
   return (
     <section className="section timeline">
-      <Eyebrow>Our evolution</Eyebrow>
-      <div className="timeline-grid">
-        {[
-          ['1982', 'The beginning', 'KB is founded to undertake structural fabrication and site erection projects.'],
-          ['1990s', 'A broader capability', 'The business expands into equipment, heavy winch machinery and crane hire.'],
-          ['2000s', 'Technical depth', 'Boiler repairs, IBR components and pressure vessels become core strengths.'],
-          ['Today', 'A trusted partner', 'KB supports India’s leading nuclear, aerospace and power industrial projects.']
-        ].map(([year, title, text]) => (
-          <article data-reveal key={year}>
-            <span>{year}</span>
-            <h3>{title}</h3>
-            <p>{text}</p>
+      <div className="timeline-header" data-reveal>
+        <div>
+          <Eyebrow>Our evolution</Eyebrow>
+          <h2>Four decades of precision,<br /><em>resilience & growth.</em></h2>
+        </div>
+        <p className="timeline-intro-text">
+          From pioneering structural fabrication in 1982 to engineering mission-critical installations for India’s nuclear, aerospace, and energy infrastructure.
+        </p>
+      </div>
+
+      {/* Progress Track */}
+      <div className="timeline-rail" data-reveal>
+        <div
+          className="timeline-rail-bar"
+          style={{ width: `${((activeEra + 0.5) / eras.length) * 100}%` }}
+        ></div>
+        {eras.map((era, idx) => (
+          <button
+            key={era.year}
+            type="button"
+            className={`timeline-node ${activeEra === idx ? 'active' : ''}`}
+            onClick={() => setActiveEra(idx)}
+            aria-label={`Select era ${era.year}`}
+          >
+            <span className="node-dot"></span>
+            <div className="node-labels">
+              <span className="node-year">{era.year}</span>
+              <span className="node-sub">{era.badge}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+
+      {/* Interactive Cards Grid */}
+      <div className="timeline-grid" data-reveal>
+        {eras.map((era, idx) => (
+          <article
+            key={era.year}
+            className={`timeline-card ${activeEra === idx ? 'is-active' : ''}`}
+            onClick={() => setActiveEra(idx)}
+            onMouseEnter={() => setActiveEra(idx)}
+          >
+            <div className="card-ambient-glow"></div>
+
+            {/* Visual Hero Banner */}
+            <div className="card-hero-banner">
+              <img src={era.image} alt={era.title} className="card-banner-img" loading="lazy" />
+              <div className="card-banner-overlay"></div>
+              <div className="card-top-chips">
+                <span className="phase-tag">{era.phase}</span>
+                <span className="badge-tag">{era.badge}</span>
+              </div>
+              <div className="year-hero">
+                <span className="year-num">{era.year}</span>
+                <span className="corner-accent"></span>
+              </div>
+            </div>
+
+            <div className="card-body">
+              <h3 className="era-title">{era.title}</h3>
+              <p className="era-desc">{era.text}</p>
+
+              <div className="card-tags">
+                {era.highlights.map((h, i) => (
+                  <span key={i} className="highlight-pill">
+                    <span className="pill-bullet">◈</span>
+                    <span>{h}</span>
+                  </span>
+                ))}
+              </div>
+
+              <div className="card-footer">
+                <div className="stat-box">
+                  <strong>{era.stat}</strong>
+                  <small>{era.metric}</small>
+                </div>
+                <span className="card-indicator">
+                  {activeEra === idx ? '● CURRENT ERA' : 'VIEW ERA ↗'}
+                </span>
+              </div>
+            </div>
           </article>
         ))}
       </div>
@@ -937,42 +1217,49 @@ function Leadership() {
           <Eyebrow>Leadership</Eyebrow>
           <h2>A legacy carried<br /><em>forward.</em></h2>
         </div>
-        <p>The values that established Kutty Brothers continue to guide its people, its projects and its future.</p>
+        <p>The values that established Kutty Brothers continue to guide its people, its projects, and its future across four decades of engineering leadership.</p>
       </div>
-      <div className="leadership-grid">
-        <article className="leader-card founder" data-reveal>
-          <div className="leader-portrait">
-            <div className="portrait-glow"></div>
-            <img src="/images/ismail-founder.jpeg" alt="Mr. Ismail K, founder of Kutty Brothers" loading="lazy" />
-            <span>01</span>
-          </div>
-          <div className="leader-copy">
-            <div>
-              <small>Founder</small>
-              <h3>Mr. Ismail K</h3>
-            </div>
-            <p>Founder of Kutty Brothers, whose vision and commitment to dependable engineering established the company’s foundation in 1982.</p>
-            <div className="leader-signoff">
-              <span>KB</span>
-              <em>Since 1982</em>
-            </div>
-          </div>
-        </article>
+      <div className="leadership-grid single-leader">
         <article className="leader-card ceo" data-reveal>
-          <div className="leader-portrait">
-            <div className="portrait-glow"></div>
-            <img src="/images/riyas-ceo.jpeg" alt="Mr. Riyaz K.I, CEO of Kutty Brothers" loading="lazy" />
-            <span>02</span>
+          <div className="leader-ambient-glow"></div>
+          <div className="leader-portrait-wrap">
+            <div className="portrait-frame">
+              <img src="/images/riyas-ceo.jpeg" alt="Mr. Riyaz K.I, CEO of Kutty Brothers" loading="lazy" />
+              <div className="portrait-overlay"></div>
+              <div className="portrait-badge">
+                <span className="badge-dot"></span>
+                <span>EXECUTIVE LEADERSHIP</span>
+              </div>
+            </div>
           </div>
           <div className="leader-copy">
-            <div>
-              <small>Chief Executive Officer</small>
-              <h3>Mr. Riyaz K.I</h3>
+            <div className="leader-role-strip">
+              <span className="leader-role-pill gold">Chief Executive Officer</span>
+              <span className="leader-tenure">12+ Yrs Operations</span>
             </div>
-            <p>The proceedings of the company now rest with Mr. Riyaz K.I, son of Mr. Ismail, who has been involved in all company operations for the past 12 years.</p>
+            <h3>Mr. Riyaz K.I</h3>
+            <p className="leader-bio">
+              The proceedings of the company now rest with Mr. Riyaz K.I, son of Mr. Ismail, who has been involved in all company operations for the past 12 years.
+            </p>
+            <div className="leader-pillars">
+              <div className="pillar-item">
+                <span className="pillar-icon">◈</span>
+                <span>Spearheading nuclear, aerospace & high-pressure sectors</span>
+              </div>
+              <div className="pillar-item">
+                <span className="pillar-icon">◈</span>
+                <span>Leading modernization of heavy plant machinery & certified IBR fleet</span>
+              </div>
+            </div>
             <div className="leader-signoff">
-              <span>KB</span>
-              <em>Leading today</em>
+              <div className="signoff-seal">
+                <span className="seal-kb">KB</span>
+                <div className="seal-text">
+                  <strong>EXECUTIVE</strong>
+                  <em>Leading today</em>
+                </div>
+              </div>
+              <span className="signoff-quote">“Precision at scale.”</span>
             </div>
           </div>
         </article>
@@ -983,10 +1270,9 @@ function Leadership() {
 
 function Capabilities({ onSelectMfgItem }) {
   const [activeCat, setActiveCat] = useState('all');
-  const [searchTerm, setSearchTerm] = useState('');
 
   const mfgCategories = [
-    { id: 'all', label: 'All 29 Products & Services' },
+    { id: 'all', label: 'All Products & Services' },
     { id: 'vessels', label: 'Vessels & Silos' },
     { id: 'process', label: 'Process Equipment & Towers' },
     { id: 'structures', label: 'Structures & Sheds' },
@@ -997,10 +1283,7 @@ function Capabilities({ onSelectMfgItem }) {
   ];
 
   const filteredItems = manufacturingItems.filter((item) => {
-    const matchesCat = activeCat === 'all' || item.cat === activeCat;
-    const matchesSearch = item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          item.desc.toLowerCase().includes(searchTerm.toLowerCase());
-    return matchesCat && matchesSearch;
+    return activeCat === 'all' || item.cat === activeCat;
   });
 
   return (
@@ -1008,24 +1291,13 @@ function Capabilities({ onSelectMfgItem }) {
       <section className="section capability-intro" style={{ paddingTop: '150px' }}>
         <div data-reveal>
           <Eyebrow>End-to-End Manufacturing & Services</Eyebrow>
-          <h2>29 Specialized<br /><em>Industrial Offerings.</em></h2>
+          <h2>Specialized<br /><em>Industrial Offerings.</em></h2>
         </div>
         <p className="lead" data-reveal>Built to ASME, TEMA, and IBR regulations with uncompromising quality, non-destructive testing (NDT), and certified welding standards.</p>
       </section>
 
-      {/* Live Search & Filter Bar */}
+      {/* Category Filter Bar */}
       <section className="section" style={{ paddingTop: '10px', paddingBottom: '30px' }}>
-        <div className="search-box-container" data-reveal>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search manufacturing items (e.g. Vessel, Reactor, IBR, Silo, ESP)..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <span className="search-icon">🔍</span>
-        </div>
-
         <div className="filter-bar" data-reveal>
           {mfgCategories.map((cat) => (
             <button
@@ -1039,13 +1311,12 @@ function Capabilities({ onSelectMfgItem }) {
         </div>
       </section>
 
-      {/* 29 Manufacturing, IBR Components & Services Items Grid */}
+      {/* Manufacturing, IBR Components & Services Items Grid */}
       <section className="section" style={{ paddingTop: '0' }}>
-        <div className="mfg-card-grid">
+        <div className="mfg-card-grid" data-reveal>
           {filteredItems.map((item) => (
             <article
               className="mfg-card"
-              data-reveal
               key={item.id}
               onClick={() => onSelectMfgItem(item)}
             >
@@ -1075,9 +1346,9 @@ function Capabilities({ onSelectMfgItem }) {
       <section className="clients section">
         <Eyebrow>Operations & maintenance partners</Eyebrow>
         <h2>Keeping key plants <em>on.</em></h2>
-        <div className="client-grid">
+        <div className="client-grid" data-reveal>
           {['Birla Carbon India Ltd', 'Saint-Gobain India', 'Epsilon Carbon Pvt Ltd', 'E.I.D-Parry India Ltd', 'SRHHL'].map((client, index) => (
-            <div data-reveal key={client}>
+            <div key={client}>
               <span>0{index + 1}</span>
               {client}
             </div>
@@ -1088,23 +1359,40 @@ function Capabilities({ onSelectMfgItem }) {
   );
 }
 
-function SectorCard({ sector, index, onSelectProject }) {
+function SectorCard({ sector, onSelectProject }) {
   const [expanded, setExpanded] = useState(false);
   const maxVisible = 3;
   const hasMore = sector.projects.length > maxVisible;
   const visibleProjects = expanded ? sector.projects : sector.projects.slice(0, maxVisible);
 
+  function toggleExpand() {
+    if (hasMore) {
+      setExpanded((prev) => !prev);
+    } else if (onSelectProject) {
+      onSelectProject({
+        title: sector.title,
+        kicker: 'Key Sector Experience',
+        client: sector.projects.join(', '),
+        scope: `Specialised engineering, fabrication, erection and EPC support for ${sector.title}. Major project execution includes ${sector.projects.join(', ')}.`,
+        image: sector.image,
+        location: 'India',
+        year: '1982 - Present'
+      });
+    }
+  }
+
   return (
-    <article className="sector-project-card" data-reveal key={sector.title}>
+    <article
+      className={`sector-project-card ${expanded ? 'is-expanded' : ''}`}
+      key={sector.title}
+      onClick={toggleExpand}
+      style={{ cursor: 'pointer' }}
+    >
       <div className="sector-card-media">
         <img src={sector.image} alt={sector.title} loading="lazy" />
-        <span className="sector-card-badge">{String(index + 1).padStart(2, '0')}</span>
       </div>
       <div className="sector-card-content">
         <div>
-          <div className="sector-card-top">
-            <span>{sector.projects.length} {sector.projects.length === 1 ? 'project' : 'projects'}</span>
-          </div>
           <h3>{sector.title}</h3>
           <ul>
             {visibleProjects.map((project) => (
@@ -1117,25 +1405,29 @@ function SectorCard({ sector, index, onSelectProject }) {
               className="view-more-btn"
               onClick={(e) => {
                 e.stopPropagation();
-                setExpanded(!expanded);
+                setExpanded((prev) => !prev);
               }}
             >
-              {expanded ? 'Show Less −' : `View More (+${sector.projects.length - maxVisible})`}
+              {expanded ? 'Show Less −' : 'View More +'}
             </button>
           )}
         </div>
         <div
           className="sector-card-bottom"
-          onClick={() => onSelectProject && onSelectProject({
-            title: sector.title,
-            kicker: `${sector.projects.length} ${sector.projects.length === 1 ? 'project' : 'projects'}`,
-            client: sector.projects.join(', '),
-            scope: `Specialised engineering, fabrication, erection and EPC support for ${sector.title}. Major project execution includes ${sector.projects.join(', ')}.`,
-            image: sector.image,
-            location: 'India',
-            year: '1982 - Present',
-            index: String(index + 1).padStart(2, '0')
-          })}
+          onClick={(e) => {
+            e.stopPropagation();
+            if (onSelectProject) {
+              onSelectProject({
+                title: sector.title,
+                kicker: 'Key Sector Experience',
+                client: sector.projects.join(', '),
+                scope: `Specialised engineering, fabrication, erection and EPC support for ${sector.title}. Major project execution includes ${sector.projects.join(', ')}.`,
+                image: sector.image,
+                location: 'India',
+                year: '1982 - Present'
+              });
+            }
+          }}
         >
           <span>View sector experience</span>
           <Arrow />
@@ -1146,15 +1438,6 @@ function SectorCard({ sector, index, onSelectProject }) {
 }
 
 function Projects({ onSelectProject }) {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredSectors = sectorPortfolio.filter((sector) => {
-    const term = searchTerm.toLowerCase();
-    const matchesTitle = sector.title.toLowerCase().includes(term);
-    const matchesProjects = sector.projects.some((p) => p.toLowerCase().includes(term));
-    return matchesTitle || matchesProjects;
-  });
-
   return (
     <>
       <PageHero
@@ -1173,22 +1456,10 @@ function Projects({ onSelectProject }) {
           <p>Our work has supported industrial progress across power, process, manufacturing and national infrastructure.</p>
         </div>
 
-        <div className="search-box-container" data-reveal style={{ marginBottom: '40px' }}>
-          <input
-            className="search-input"
-            type="text"
-            placeholder="Search projects by name, client, or industry..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <span className="search-icon">🔍</span>
-        </div>
-
-        <div className="sector-project-grid">
-          {filteredSectors.map((sector, index) => (
+        <div className="sector-project-grid" data-reveal>
+          {sectorPortfolio.map((sector) => (
             <SectorCard
               sector={sector}
-              index={index}
               key={sector.title}
               onSelectProject={onSelectProject}
             />
@@ -1241,9 +1512,9 @@ function Equipment({ onRequestEquipment }) {
         </div>
       </section>
 
-      <section className="equipment-grid section">
+      <section className="equipment-grid section" data-reveal>
         {filteredEquipment.map((item, i) => (
-          <article className="equipment-card" data-reveal key={item.id}>
+          <article className="equipment-card" key={item.id}>
             <div className="equipment-card-image-box">
               <span className="eq-count">0{i + 1} / {item.capacity}</span>
               <img src={item.image} alt={item.title} className="equipment-card-img" loading="lazy" />
@@ -1373,9 +1644,6 @@ function PageHero({ eyebrow, title, text, image }) {
       <div className="page-hero-image" style={{ backgroundImage: `url(${image})` }}></div>
       <div className="page-hero-shade"></div>
       <div className="page-hero-content">
-        <div className="page-hero-since-tag">
-          <span className="est-dot"></span> ESTABLISHED SINCE 1982
-        </div>
         <Eyebrow light>{eyebrow}</Eyebrow>
         <h1>{title}</h1>
         <p>{text}</p>
