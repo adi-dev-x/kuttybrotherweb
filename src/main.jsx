@@ -94,29 +94,145 @@ const projects = [
 ];
 
 const sectorPortfolio = [
-  { title: 'Aerospace industry projects', projects: ['ISRO (Indian Space Research Organisation)'], image: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1000&q=80&fm=webp' },
-  { title: 'Nuclear power projects', projects: ['Kudankulam Nuclear Power Plant', 'Kalpakkam Atomic Power Plant'], image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1000&q=80&fm=webp' },
-  { title: 'Thermal power projects', projects: ['LVS Power Plant', 'Ind-Barath Power Gencom Limited', 'Cauvery Power Generation Chennai (P) Ltd.', 'BGR Energy Systems Ltd.', 'Lanco Industries Ltd.', 'Neyveli Lignite Corporation'], image: '/images/manufac/chimney-stack.jpg' },
-  { title: 'Cement industry projects', projects: ['ACC Cement Plant', 'UltraTech Cements (L&T)'], image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80&fm=webp' },
-  { title: 'Chemical industry projects', projects: ['Adheeswara Chemicals Pvt. Ltd.', 'Coromandel Indarc', 'Coromandel International Limited', 'Coromandel Fertilisers Limited', 'Kamar Chemicals & Ind. Limited', 'Keerthi (Bangalore) Pvt. Ltd.', 'Krishna Chemicals & Ind. Limited', 'Royalaseema Hi-Strength Alkalis Ltd.'], image: '/images/manufac/reactors.jpg' },
-  { title: 'Water & effluent treatment plant projects', projects: ['Quality Water Management'], image: '/images/manufac/cartridge-filter-tanks.jpg' },
-  { title: 'Hydrocarbon / refineries / diesel power', projects: ['Andhra Petro Chemicals Ltd.', 'V.B. Ferro Alloys Limited', 'Viki Industries Limited', 'Cetex Limited', 'U.B. Petro Products', 'Airoil - Flaregas India Limited'], image: '/images/manufac/distillation-column.jpg' },
-  { title: 'Carbon & carbon black', projects: ['Epsilon Carbon Pvt. Ltd.', 'Hi-Tech Carbon', 'Philips Carbon India Ltd.'], image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1000&q=80&fm=webp' },
-  { title: 'Sugar & distilleries', projects: ['Kothari Sugars', 'Shaw Wallce & Company Limited', 'A.P. Met Distillery Limited', 'Gemini Distillery Limited', 'Khoday Distillery Limited', 'Maharashtra Distillery Limited', 'Aravind Distilleries'], image: '/images/manufac/drying-towers.jpg' },
-  { title: 'Steel industry', projects: ['Kanishk Steel Limited', 'VKG Steels Limited', 'SISCOL Limited', 'Pinakini Steels Limited'], image: '/images/manufac/industrial-sheds.jpg' },
-  { title: 'Textile industry', projects: ['Loyal Textile Limited', 'Valli Mills Limited'], image: '/images/manufac/heavy-sliding-doors.jpg' },
-  { title: 'Pharma & drugs industry', projects: ['Malladi Drugs & Pharmaceutical Ltd.', 'Aswini Bio-Pharma Limited', 'Lactochem Limited', 'J.K. Pharma Limited'], image: '/images/manufac/hot-gas-filters.png' },
-  { title: 'Glass industry', projects: ['Saint-Gobain Glass India Limited'], image: '/images/manufac/furnaces.jpg' },
-  { title: 'Automobile industry', projects: ['Visteon Ford India', 'Heavy Vehicle Factory', 'Ford Motors India Limited', 'Hwashin Automotive India Limited', 'Hyundai Motors India Limited'], image: '/images/manufac/paint-booth.jpg' },
-  { title: 'Heavy engineering', projects: ['L&T Limited', 'Rishabh Engineering Limited', 'Southern Structurals Limited', 'Chennai Harbour', 'Balda Mothersons India Limited', 'Chowal India Limited', 'Liporite Limited'], image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'Aerospace facilities', title: 'Aerospace industry projects', projects: ['ISRO (Indian Space Research Organisation)'], image: 'https://images.unsplash.com/photo-1517976487492-5750f3195933?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'Nuclear power projects', title: 'Nuclear power projects', projects: ['Kudankulam Nuclear Power Plant', 'Kalpakkam Atomic Power Plant'], image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'Thermal power projects', title: 'Thermal power projects', projects: ['LVS Power Plant', 'Ind-Barath Power Gencom Limited', 'Cauvery Power Generation Chennai (P) Ltd.', 'BGR Energy Systems Ltd.', 'Lanco Industries Ltd.', 'Neyveli Lignite Corporation'], image: '/images/manufac/chimney-stack.jpg' },
+  { profileTerm: 'Cement industry', title: 'Cement industry projects', projects: ['ACC Cement Plant', 'UltraTech Cements (L&T)'], image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'Chemical industry · Acids, chemicals & fertilizer', title: 'Chemical industry projects', projects: ['Adheeswara Chemicals Pvt. Ltd.', 'Coromandel Indarc', 'Coromandel International Limited', 'Coromandel Fertilisers Limited', 'Kamar Chemicals & Ind. Limited', 'Keerthi (Bangalore) Pvt. Ltd.', 'Krishna Chemicals & Ind. Limited', 'Rayalaseema Hi-Strength Alkalis Ltd.'], image: '/images/manufac/reactors.jpg' },
+  { profileTerm: 'Water & effluent treatment', title: 'Water & effluent treatment plant projects', projects: ['Quality Water Management'], image: '/images/manufac/cartridge-filter-tanks.jpg' },
+  { profileTerm: 'Hydro-carbon industry · Diesel power projects', title: 'Hydrocarbon / refineries / diesel power', projects: ['Andhra Petro Chemicals Ltd.', 'V.B. Ferro Alloys Limited', 'Viki Industries Limited', 'Cetex Limited', 'U.B. Petro Products', 'Airoil - Flaregas India Limited'], image: '/images/manufac/distillation-column.jpg' },
+  { profileTerm: 'Carbon & carbon black', title: 'Carbon & carbon black', projects: ['Epsilon Carbon Pvt. Ltd.', 'Hi-Tech Carbon', 'Philips Carbon India Ltd.'], image: 'https://images.unsplash.com/photo-1578575437130-527eed3abbec?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'Sugars & distilleries', title: 'Sugar & distilleries', projects: ['Kothari Sugars', 'Shaw Wallce & Company Limited', 'A.P. Met Distillery Limited', 'Gemini Distillery Limited', 'Khoday Distillery Limited', 'Maharashtra Distillery Limited', 'Aravind Distilleries'], image: '/images/manufac/drying-towers.jpg' },
+  { profileTerm: 'Steel industry', title: 'Steel industry', projects: ['Kanishk Steel Limited', 'VKG Steels Limited', 'SISCOL Limited', 'Pinakini Steels Limited'], image: '/images/manufac/industrial-sheds.jpg' },
+  { profileTerm: 'Textile industry', title: 'Textile industry', projects: ['Loyal Textile Limited', 'Valli Mills Limited'], image: '/images/manufac/heavy-sliding-doors.jpg' },
+  { profileTerm: 'Pharma & drugs', title: 'Pharma & drugs industry', projects: ['Malladi Drugs & Pharmaceutical Ltd.', 'Aswini Bio-Pharma Limited', 'Lactochem Limited', 'J.K. Pharma Limited'], image: '/images/manufac/hot-gas-filters.png' },
+  { profileTerm: 'Glass industry', title: 'Glass industry', projects: ['Saint-Gobain Glass India Limited'], image: '/images/manufac/furnaces.jpg' },
+  { profileTerm: 'Automobile industry', title: 'Automobile industry', projects: ['Visteon Ford India', 'Heavy Vehicle Factory', 'Ford Motors India Limited', 'Hwashin Automotive India Limited', 'Hyundai Motors India Limited'], image: '/images/manufac/paint-booth.jpg' },
+  { profileTerm: 'Heavy engineering', title: 'Heavy engineering', projects: ['L&T Limited', 'Rishabh Engineering Limited', 'Southern Structurals Limited', 'Chennai Harbour', 'Balda Mothersons India Limited', 'Chowal India Limited', 'Liporite Limited'], image: 'https://images.unsplash.com/photo-1581092335397-9583fe92d232?auto=format&fit=crop&w=1000&q=80&fm=webp' },
+  { profileTerm: 'IBR & boiler', title: 'IBR & boiler projects', projects: ['Auxiliary boiler for SRHHL, Kurnool', 'Boiler and furnace at Calcimag, Cheyyar', 'Hot heat exchangers for SRHHL, Kurnool', 'Boiler repairs & IBR pressure parts'], image: '/images/manufac/ibr.jpg' },
+  { profileTerm: 'Material handling', title: 'Material handling', projects: ['Strengthening of conveyor truss at NTECL, Vallur', 'Storage silos at Epsilon Carbon, Bellary', 'Chutes, hoppers & bunkers'], image: '/images/manufac/chutes.jpg' },
+  { profileTerm: 'Paper & printing', title: 'Paper & printing', projects: ['Dinathanti News Papers'], image: '/images/manufac/heavy-equipments.jpg' },
 ];
 
+// Clients without an official logo asset (image: null) stay out of the logo rail
+// and are listed as text beneath it.
 const clientPartners = [
   { id: 'isro', name: 'ISRO', image: '/images/clients/isro.png' },
   { id: 'birla', name: 'Birla Carbon', image: '/images/clients/birla-carbon.png' },
   { id: 'parrys', name: 'Parrys', image: '/images/clients/parrys.png' },
   { id: 'epsilon', name: 'Epsilon Carbon', image: '/images/clients/epsilon-carbon.jpg' },
   { id: 'reliance', name: 'Reliance Industries', image: '/images/clients/reliance.png' },
+  { id: 'tata-steel', name: 'Tata Steel', image: null },
+  { id: 'saint-gobain', name: 'Saint-Gobain', image: null },
+  { id: 'philips-carbon', name: 'Philips Carbon', image: null },
+  { id: 'hvf', name: 'Heavy Vehicles Factory', image: null },
+  { id: 'hyundai', name: 'Hyundai Motors', image: null },
+  { id: 'ford', name: 'Ford Motors India', image: null },
+  { id: 'sterlite', name: 'Sterlite Industries', image: null },
+  { id: 'srhhl', name: 'Rayalaseema Hi-Strength Hypo (SRHHL)', image: null },
+  { id: 'kamar', name: 'Kamar Chemicals', image: null },
+];
+
+const logoPartners = clientPartners.filter((client) => client.image);
+const textPartners = clientPartners.filter((client) => !client.image);
+
+const clientReferences = [
+  'Tata Steel Ltd',
+  'Bhilai Steel Ltd',
+  'Sterlite Industries Ltd',
+  'Reliance Infrastructure',
+  'CCCL, Chennai',
+  'Indian Molasses Company, Chennai',
+  'Haldia Port, Haldia',
+  'IMC Storage Tanks, Majmujh, Rampur',
+  'Hindubharath Power Plant',
+  'Greensol Power Solutions',
+  'Kamatchi Power Plants, Kavarapudi',
+  'Thermal Systems, Hyderabad',
+  'EID Parry, Ennore',
+  'Godavari Fertilizers Ltd',
+  'Dinathanti News Papers',
+  'CEETEX Petrochemicals Ltd',
+  'Madras Port Ltd, Chennai',
+  'Mohan Breweries',
+  'Kothari Sugars',
+  'Bonnari Amman Sugars Ltd',
+  'TANFAG Industries, Cuddalore',
+];
+
+const projectExperience = [
+  {
+    id: 'g1',
+    index: '01',
+    title: 'Aerospace & national infrastructure',
+    image: '/images/manufac/launching-pads.jpg',
+    projects: [
+      'Dismantling of first launch pad at PIF / ISRO',
+      'Erection of movable launch pad at PIF / ISRO',
+      'Erection of sliding doors at SVAB / SHAR / ISRO',
+      'Erection of 450 T / 60 T EOT crane at SVAB / SHAR / ISRO',
+      'Erection of buffer tank at Microsoft Data Centre',
+    ],
+  },
+  {
+    id: 'g2',
+    index: '02',
+    title: 'Carbon, chemical & process industry',
+    image: '/images/manufac/dryers.jpg',
+    projects: [
+      'Supply, manufacture and installation of 70 m dryer stack for Epsilon Carbon',
+      'Supply, manufacture and installation of tread reactors for Epsilon Carbon',
+      'Erection of 70 m dryer stack at Epsilon Carbon',
+      'Erection of rotary dryer at Birla Carbon',
+      'Erection of air pre-heater at Birla Carbon, Chennai',
+      'Erection of 65 m dryer stack at Birla Carbon, Chennai',
+      'Erection of IIT dryer at Keerthi Chemicals, Mandya',
+      'Erection of storage silos at Epsilon Carbon, Bellary',
+      'Fabrication and erection of storage tanks at Epsilon Carbon, Bellary',
+      'Oil storage tanks for Epsilon Carbon, Toranagallu, Karnataka',
+      'Erection of 180 TPD sulphuric acid plant at SRHHL, Kurnool',
+      'Fabrication and erection for Kamar Chemicals, Ranipet, TN',
+    ],
+  },
+  {
+    id: 'g3',
+    index: '03',
+    title: 'Heat exchangers, boilers & heavy equipment',
+    image: '/images/manufac/heat-exchangers.png',
+    projects: [
+      'Supply, manufacture and installation of hot heat exchanger for SRHHL, Kurnool',
+      'Supply, manufacture and installation of cold heat exchanger for SRHHL, Kurnool',
+      'Supply, manufacture and installation of 80 m dryer stack at Philips Carbon, Cochin',
+      'Supply, manufacture and installation of chimney for SRHHL, Kurnool',
+      'Hot heat exchangers for SRHHL, Kurnool, AP',
+      'Auxiliary boiler for SRHHL, Kurnool',
+      'Heat exchanger at Calcimag, Cheyyar',
+      'Boiler and furnace at Calcimag, Cheyyar',
+      'Chimney and scrubber for Calcimag, Cheyyar',
+    ],
+  },
+  {
+    id: 'g4',
+    index: '04',
+    title: 'Industrial erection & process installation',
+    image: '/images/manufac/piping-allied.jpg',
+    projects: [
+      'Strengthening of conveyor truss at NTECL, Vallur, Chennai',
+      'Dismantling and erection of 75 m chimney at Birla Carbon, Gummidipoondi, Chennai',
+      'Installation of 2,500 paint-plant equipment items at Birla Opus Paint, Cheyyar, TN',
+      'Converter erection and insulation at Calcimag, Cheyyar, TN',
+      'SS and MS piping installation at Birla Opus Paint, Cheyyar, TN',
+      'Paint mixers at Birla Opus Paint, Cheyyar, TN',
+    ],
+  },
+];
+
+const coreValues = ['Quality', 'Commitment', 'Satisfaction', 'Innovation', 'Integrity'];
+
+const facilities = [
+  { title: 'Office & works', text: 'No. 276-D, Vanagaram Road, Athipet, Chennai – 600 058.', stat: 'Head office' },
+  { title: 'Works & painting', text: 'Approximately 250 cents of land with approximately 25,000 sq. ft. of total covered space.', stat: '≈ 250 cents' },
+  { title: 'Tools & machines maintenance / stock yard', text: 'Approximately 50 cents of open land, including sand blasting and stock-yard facilities.', stat: '≈ 50 cents' },
 ];
 
 // 29 Manufacturing, IBR Components & Services Items with images from manufac folder
@@ -687,6 +803,7 @@ function Home({ onSelectProject }) {
         </div>
         <div className="intro-copy" data-reveal>
           <p className="lead">For over four decades, Kutty Brothers has transformed complex industrial requirements into dependable work on the ground.</p>
+          <p>Founded in 1982 by Dr (Hons) Ismail K and his brothers, Kutty Brothers began with fabrication and erection and expanded into crane and machinery rental, boiler repairs, boiler-component manufacturing and pressure vessels. The company has since supported projects across major industrial sectors throughout India.</p>
           <p>From plant construction and boiler components to specialized equipment and shutdown support, we bring skilled people, reliable systems and an unwavering standard of safety to every site.</p>
           <Button to="/about">Our story</Button>
         </div>
@@ -711,6 +828,16 @@ function Home({ onSelectProject }) {
               <span>Landmark<br />projects</span>
             </div>
           </div>
+          <div className="stats stats-secondary">
+            <div>
+              <strong>250<sup>+</sup></strong>
+              <span>Cents combined<br />facility footprint</span>
+            </div>
+            <div>
+              <strong>25,000<sup>+</sup></strong>
+              <span>Sq. ft. covered<br />works & painting</span>
+            </div>
+          </div>
           <p>Trusted by leading national institutions and industrial conglomerates across the full spectrum of Indian industry.</p>
         </div>
       </section>
@@ -727,7 +854,7 @@ function Home({ onSelectProject }) {
           {/* Row 1: Moves Left */}
           <div className="client-track">
             <div className="client-marquee move-left">
-              {[...clientPartners, ...clientPartners, ...clientPartners, ...clientPartners].map((client, index) => (
+              {[...logoPartners, ...logoPartners, ...logoPartners, ...logoPartners].map((client, index) => (
                 <ClientLogo client={client} key={`r1-${client.id}-${index}`} />
               ))}
             </div>
@@ -736,7 +863,7 @@ function Home({ onSelectProject }) {
           {/* Row 2: Moves Right */}
           <div className="client-track">
             <div className="client-marquee move-right">
-              {[...clientPartners.slice().reverse(), ...clientPartners.slice().reverse(), ...clientPartners.slice().reverse(), ...clientPartners.slice().reverse()].map((client, index) => (
+              {[...logoPartners.slice().reverse(), ...logoPartners.slice().reverse(), ...logoPartners.slice().reverse(), ...logoPartners.slice().reverse()].map((client, index) => (
                 <ClientLogo client={client} key={`r2-${client.id}-${index}`} />
               ))}
             </div>
@@ -745,7 +872,7 @@ function Home({ onSelectProject }) {
           {/* Row 3: Moves Left */}
           <div className="client-track">
             <div className="client-marquee move-left-alt">
-              {[...clientPartners.slice(2), ...clientPartners.slice(0, 2), ...clientPartners.slice(2), ...clientPartners.slice(0, 2), ...clientPartners.slice(2), ...clientPartners.slice(0, 2), ...clientPartners.slice(2), ...clientPartners.slice(0, 2)].map((client, index) => (
+              {[...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2)].map((client, index) => (
                 <ClientLogo client={client} key={`r3-${client.id}-${index}`} />
               ))}
             </div>
@@ -754,12 +881,16 @@ function Home({ onSelectProject }) {
           {/* Row 4: Moves Right */}
           <div className="client-track">
             <div className="client-marquee move-right-alt">
-              {[...clientPartners.slice(4), ...clientPartners.slice(0, 4), ...clientPartners.slice(4), ...clientPartners.slice(0, 4), ...clientPartners.slice(4), ...clientPartners.slice(0, 4), ...clientPartners.slice(4), ...clientPartners.slice(0, 4)].map((client, index) => (
+              {[...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4)].map((client, index) => (
                 <ClientLogo client={client} key={`r4-${client.id}-${index}`} />
               ))}
             </div>
           </div>
         </div>
+        <p className="client-text-list section" data-reveal>
+          <span>Also trusted by</span>
+          {textPartners.map((client) => client.name).join('  ·  ')}
+        </p>
       </section>
 
       <section className="services section">
@@ -1045,9 +1176,39 @@ function About() {
           </div>
         </div>
         <div className="story-copy" data-reveal>
-          <p className="lead">Kutty Brothers was founded in 1982 by DR (HONS) ISMAIL.K and his brothers with a clear ambition: deliver work industrial clients could depend on.</p>
+          <p className="lead">Kutty Brothers was founded in 1982 by Dr (Hons) Ismail K and his brothers with a clear ambition: deliver work industrial clients could depend on.</p>
           <p>Starting with fabrication and erection, KB steadily expanded into tools and machinery hire, cranes, boiler repairs, and the manufacture of boiler components and pressure vessels. Today, we operate across hydrocarbon, power, chemical, aerospace, steel, cement and more.</p>
           <p>We remain guided by the same standards: careful project control, motivated people and quality that holds up long after handover.</p>
+
+          <div className="story-values">
+            <h3>Built on values. <em>Proven by work.</em></h3>
+            <p>The company grew from fabrication and erection into a broader industrial engineering capability, supported by experienced personnel, reliable equipment and disciplined project execution.</p>
+            <p>Quality and Safety remain the guiding principles of the organisation, with strong emphasis on product quality, project control and timely completion.</p>
+            <div className="core-values" aria-label="Core values">
+              {coreValues.map((value, index) => (
+                <span key={value}>
+                  <small>0{index + 1}</small>
+                  {value}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="story-facilities" data-reveal>
+          <Eyebrow>Facilities</Eyebrow>
+          <div className="facility-grid">
+            {facilities.map((facility, index) => (
+              <article className="facility-card" key={facility.title}>
+                <div className="facility-card-top">
+                  <span>0{index + 1}</span>
+                  <span>{facility.stat}</span>
+                </div>
+                <h4>{facility.title}</h4>
+                <p>{facility.text}</p>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
       <section className="principles">
@@ -1079,6 +1240,7 @@ function Timeline() {
       year: '1982',
       title: 'The beginning',
       text: 'KB is founded to undertake structural fabrication and site erection projects.',
+      capability: 'Structural fabrication, site erection and industrial project execution',
       highlights: ['Structural Steel Fabrication', 'Site Erection & Rigging', 'Heavy Industrial Frames'],
       stat: 'EST. 1982',
       metric: 'Foundation',
@@ -1090,6 +1252,7 @@ function Timeline() {
       year: '1990s',
       title: 'A broader capability',
       text: 'The business expands into equipment, heavy winch machinery and crane hire.',
+      capability: 'Crane rental, transport support, heavy winches and lifting equipment',
       highlights: ['Heavy Winches to 100T', 'Hydraulic Jack Fleet', 'Heavy Crane Operations'],
       stat: '100 T',
       metric: 'Winch Systems',
@@ -1101,6 +1264,7 @@ function Timeline() {
       year: '2000s',
       title: 'Technical depth',
       text: 'Boiler repairs, IBR components and pressure vessels become core strengths.',
+      capability: 'Boiler repairs, IBR work, pressure vessels and specialised process equipment',
       highlights: ['Certified IBR Standards', 'High-Pressure Vessels', 'Thermal Columns & ESP'],
       stat: 'IBR WELDING',
       metric: 'Coded Standards',
@@ -1112,6 +1276,7 @@ function Timeline() {
       year: 'Today',
       title: 'A trusted partner',
       text: 'KB supports India’s leading nuclear, aerospace and power industrial projects.',
+      capability: 'Industrial execution across aerospace, nuclear, power, chemical, carbon, steel, cement and other process industries',
       highlights: ['ISRO Space Hardware', 'Nuclear Plant Installations', 'Turnkey Heavy Projects'],
       stat: '42+ YEARS',
       metric: 'National Trust',
@@ -1182,6 +1347,7 @@ function Timeline() {
             <div className="card-body">
               <h3 className="era-title">{era.title}</h3>
               <p className="era-desc">{era.text}</p>
+              <p className="era-capability">{era.capability}</p>
 
               <div className="card-tags">
                 {era.highlights.map((h, i) => (
@@ -1239,7 +1405,7 @@ function Leadership() {
             </div>
             <h3>Mr. Riyaz K.I</h3>
             <p className="leader-bio">
-              The proceedings of the company now rest with Mr. Riyaz K.I, son of Mr. Ismail, who has been involved in all company operations for the past 12 years.
+              The proceedings of the company now rest with Mr. Riyaz K.I, son of Dr (Hons) Ismail K, who has been involved in all company operations for the past 12 years.
             </p>
             <div className="leader-pillars">
               <div className="pillar-item">
@@ -1393,6 +1559,11 @@ function SectorCard({ sector, onSelectProject }) {
       </div>
       <div className="sector-card-content">
         <div>
+          {sector.profileTerm && (
+            <div className="sector-card-top">
+              <span>{sector.profileTerm}</span>
+            </div>
+          )}
           <h3>{sector.title}</h3>
           <ul>
             {visibleProjects.map((project) => (
@@ -1437,6 +1608,51 @@ function SectorCard({ sector, onSelectProject }) {
   );
 }
 
+function ExperienceGroupCard({ group }) {
+  const [expanded, setExpanded] = useState(false);
+  const maxVisible = 4;
+  const hasMore = group.projects.length > maxVisible;
+  const visibleProjects = expanded ? group.projects : group.projects.slice(0, maxVisible);
+
+  return (
+    <article
+      className={`sector-project-card experience-card ${expanded ? 'is-expanded' : ''}`}
+      onClick={() => hasMore && setExpanded((prev) => !prev)}
+      style={{ cursor: hasMore ? 'pointer' : 'default' }}
+    >
+      <div className="sector-card-media">
+        <img src={group.image} alt={group.title} loading="lazy" />
+        <span className="sector-card-badge">GROUP {group.index}</span>
+      </div>
+      <div className="sector-card-content">
+        <div>
+          <div className="sector-card-top">
+            <span>{group.projects.length} projects</span>
+          </div>
+          <h3>{group.title}</h3>
+          <ul>
+            {visibleProjects.map((project) => (
+              <li key={project}>{project}</li>
+            ))}
+          </ul>
+          {hasMore && (
+            <button
+              type="button"
+              className="view-more-btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setExpanded((prev) => !prev);
+              }}
+            >
+              {expanded ? 'Show Less −' : `View all ${group.projects.length} +`}
+            </button>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 function Projects({ onSelectProject }) {
   return (
     <>
@@ -1463,6 +1679,36 @@ function Projects({ onSelectProject }) {
               key={sector.title}
               onSelectProject={onSelectProject}
             />
+          ))}
+        </div>
+      </section>
+
+      <section className="client-references">
+        <div className="section client-references-inner" data-reveal>
+          <Eyebrow>Selected client references</Eyebrow>
+          <ul className="client-reference-list">
+            {clientReferences.map((client, index) => (
+              <li key={client}>
+                <span>{String(index + 1).padStart(2, '0')}</span>
+                {client}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+
+      <section className="section project-experience">
+        <div className="directory-heading" data-reveal>
+          <div>
+            <Eyebrow>Selected project experience</Eyebrow>
+            <h2>Work delivered.<br /><em>Across industries.</em></h2>
+          </div>
+          <p>The company profile records a broad range of executed manufacturing, erection, installation and industrial engineering projects across India.</p>
+        </div>
+
+        <div className="experience-grid" data-reveal>
+          {projectExperience.map((group) => (
+            <ExperienceGroupCard group={group} key={group.id} />
           ))}
         </div>
       </section>

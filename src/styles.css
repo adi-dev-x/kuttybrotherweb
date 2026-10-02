@@ -3995,6 +3995,208 @@ footer .brand {
 .mfg-card:nth-child(8), .sector-project-card:nth-child(8) { transition-delay: .32s; }
 .mfg-card:nth-child(9), .sector-project-card:nth-child(9) { transition-delay: .36s; }
 
+/* --- PROFILE CONTENT: VALUES, FACILITIES, REFERENCES, EXPERIENCE --- */
+.story-values {
+  margin-top: 34px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+}
+
+.story-values h3 {
+  margin: 0;
+  font-size: 20px;
+  letter-spacing: -0.025em;
+  line-height: 1.55;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.story-values h3 em {
+  font-family: var(--serif);
+  font-weight: 500;
+}
+
+.core-values {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  column-gap: 14px;
+  margin-top: 26px;
+}
+
+.core-values span {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 12px;
+  font: 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--ink);
+}
+
+.core-values small {
+  margin-right: 6px;
+  font-size: 11px;
+  color: var(--ink);
+}
+
+.story-facilities {
+  grid-column: 1 / -1;
+  padding-top: 34px;
+  border-top: 1px solid var(--line);
+}
+
+.facility-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 22px;
+}
+
+.facility-card {
+  position: relative;
+  padding: 20px 22px 22px;
+  background: #fff;
+  border: 1px solid rgba(17, 17, 15, 0.08);
+  border-radius: var(--radius);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+}
+
+.facility-card:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 18%;
+  height: 3px;
+  background: var(--yellow);
+  transition: width 0.4s ease;
+}
+
+.facility-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.facility-card:hover:before {
+  width: 100%;
+}
+
+.facility-card-top {
+  display: flex;
+  justify-content: space-between;
+  font: 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: #777;
+}
+
+.facility-card h4 {
+  margin: 6px 0 12px;
+  font-size: 23px;
+  letter-spacing: -.065em;
+  line-height: 1.1;
+  font-weight: 800;
+  color: var(--ink);
+}
+
+.facility-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.timeline-card .era-capability {
+  color: #b5b5ad;
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: -6px 0 16px;
+}
+
+.stats-secondary {
+  margin-top: 0;
+}
+
+.client-text-list {
+  margin: 0 auto;
+  padding-top: 22px;
+  padding-bottom: 0;
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.75;
+}
+
+.client-text-list span {
+  margin-right: 14px;
+  font: 600 11px var(--mono);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: #55554f;
+}
+
+.client-references {
+  background: #f0eee4;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.client-references-inner {
+  padding-top: 44px;
+  padding-bottom: 44px;
+}
+
+.client-reference-list {
+  columns: 4;
+  column-gap: 32px;
+  margin: 24px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.client-reference-list li {
+  break-inside: avoid;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: -.03em;
+}
+
+.client-reference-list span {
+  margin-right: 12px;
+  font: 10px var(--mono);
+  letter-spacing: 0;
+  color: #777;
+}
+
+.project-experience {
+  padding-top: 90px;
+  padding-bottom: 110px;
+}
+
+.experience-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.experience-card {
+  min-height: 0;
+}
+
+.experience-card .sector-card-content {
+  min-height: 0;
+}
+
+.experience-card .sector-card-media {
+  height: 150px;
+}
+
+.experience-card h3 {
+  max-width: none;
+}
+
 /* --- RESPONSIVE DESIGN --- */
 @media (max-width: 1320px) {
   nav a { font-size: 11.5px; padding: 8px 12px; }
@@ -4032,6 +4234,8 @@ footer .brand {
   .leader-card { min-height: 430px; grid-template-columns: 250px 1fr; }
   .leader-portrait img { min-height: 430px; }
   .timeline-grid { grid-template-columns: repeat(2, 1fr); gap: 18px; }
+  .client-reference-list { columns: 3; }
+  .facility-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 650px) {
@@ -4176,6 +4380,13 @@ footer .brand {
   .leader-card.ceo .leader-portrait img { object-position: center 25%; }
   .floating-hub { bottom: 20px; right: 20px; }
   .toast-container { bottom: 20px; left: 20px; right: 20px; }
+  .core-values { grid-template-columns: repeat(3, 1fr); row-gap: 14px; }
+  .facility-grid { grid-template-columns: 1fr; gap: 12px; }
+  .client-text-list { padding: 22px 22px 0; }
+  .client-references-inner { padding: 40px 22px; }
+  .client-reference-list { columns: 2; column-gap: 18px; }
+  .project-experience { padding-top: 60px; padding-bottom: 70px; }
+  .experience-grid { grid-template-columns: 1fr; gap: 12px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
