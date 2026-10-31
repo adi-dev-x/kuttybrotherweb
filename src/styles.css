@@ -841,19 +841,19 @@ h2 {
 }
 
 .client-marquee.move-left {
-  animation: clientLoop 28s linear infinite;
+  animation: clientLoop 56s linear infinite;
 }
 
 .client-marquee.move-right {
-  animation: clientLoopReverse 28s linear infinite;
+  animation: clientLoopReverse 56s linear infinite;
 }
 
 .client-marquee.move-left-alt {
-  animation: clientLoop 34s linear infinite;
+  animation: clientLoop 68s linear infinite;
 }
 
 .client-marquee.move-right-alt {
-  animation: clientLoopReverse 34s linear infinite;
+  animation: clientLoopReverse 68s linear infinite;
 }
 
 .client-track:hover .client-marquee {

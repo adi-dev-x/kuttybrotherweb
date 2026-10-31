@@ -117,24 +117,67 @@ const sectorPortfolio = [
 // Clients without an official logo asset (image: null) stay out of the logo rail
 // and are listed as text beneath it.
 const clientPartners = [
-  { id: 'isro', name: 'ISRO', image: '/images/clients/isro.png' },
-  { id: 'birla', name: 'Birla Carbon', image: '/images/clients/birla-carbon.png' },
-  { id: 'parrys', name: 'Parrys', image: '/images/clients/parrys.png' },
-  { id: 'epsilon', name: 'Epsilon Carbon', image: '/images/clients/epsilon-carbon.jpg' },
-  { id: 'reliance', name: 'Reliance Industries', image: '/images/clients/reliance.png' },
-  { id: 'tata-steel', name: 'Tata Steel', image: null },
-  { id: 'saint-gobain', name: 'Saint-Gobain', image: null },
-  { id: 'philips-carbon', name: 'Philips Carbon', image: null },
-  { id: 'hvf', name: 'Heavy Vehicles Factory', image: null },
-  { id: 'hyundai', name: 'Hyundai Motors', image: null },
-  { id: 'ford', name: 'Ford Motors India', image: null },
+  { id: 'isro', name: 'ISRO', image: '/images/clients/isro.webp' },
+  { id: 'birla', name: 'Birla Carbon', image: '/images/clients/birla-carbon.webp' },
+  { id: 'parrys', name: 'Parrys', image: '/images/clients/parrys.webp' },
+  { id: 'epsilon', name: 'Epsilon Carbon', image: '/images/clients/epsilon-carbon.webp' },
+  { id: 'reliance-infra', name: 'Reliance Infrastructure', image: '/images/clients/reliance-infrastructure.webp' },
+  { id: 'tata-steel', name: 'Tata Steel', image: '/images/clients/tata-steel.webp' },
+  { id: 'saint-gobain', name: 'Saint-Gobain', image: '/images/clients/saint-gobain.webp' },
+  { id: 'philips-carbon', name: 'Philips Carbon', image: '/images/clients/philips-carbon.webp' },
+  { id: 'hvf', name: 'Heavy Vehicles Factory', image: '/images/clients/heavy-vehicles-factory.webp' },
+  { id: 'hyundai', name: 'Hyundai Motors', image: '/images/clients/hyundai.webp' },
+  { id: 'ford', name: 'Ford Motors India', image: '/images/clients/ford.webp' },
+  { id: 'srhhl', name: 'Rayalaseema Hi-Strength Hypo (SRHHL)', image: '/images/clients/rayalaseema.webp' },
+  { id: 'kamar', name: 'Kamar Chemicals', image: '/images/clients/kamar-chemicals.webp' },
+  { id: 'ntpc', name: 'NTPC', image: '/images/clients/ntpc.webp' },
+  { id: 'lt', name: 'Larsen & Toubro', image: '/images/clients/larsen-toubro.webp' },
+  { id: 'ultratech', name: 'UltraTech Cement', image: '/images/clients/ultratech-cement.webp' },
+  { id: 'bhilai', name: 'Bhilai Steel', image: '/images/clients/bhilai-steel.webp' },
+  { id: 'nlc', name: 'Neyveli Lignite Corporation', image: '/images/clients/neyveli-lignite.webp' },
+  { id: 'acc', name: 'ACC Cement', image: '/images/clients/acc-cement.webp' },
+  { id: 'coromandel', name: 'Coromandel International', image: '/images/clients/coromandel.webp' },
+  { id: 'bgr', name: 'BGR Energy Systems', image: '/images/clients/bgr-energy.webp' },
+  { id: 'chennai-harbour', name: 'Chennai Harbour', image: '/images/clients/chennai-harbour.webp' },
+  { id: 'lanco', name: 'Lanco Industries', image: '/images/clients/lanco-industries.webp' },
+  { id: 'mcfl', name: 'Mangalore Chemicals & Fertilizers', image: '/images/clients/mcfl.webp' },
+  { id: 'shaw-wallace', name: 'Shaw Wallace', image: '/images/clients/shaw-wallace.webp' },
+  { id: 'airoil', name: 'Airoil-Flaregas India', image: '/images/clients/airoil-flaregas.webp' },
+  { id: 'andhra-petro', name: 'Andhra Petrochemicals', image: '/images/clients/andhra-petrochemicals.webp' },
+  { id: 'aswini', name: 'Aswini Bio-Pharma', image: '/images/clients/aswini-bio-pharma.webp' },
+  { id: 'cauvery', name: 'Cauvery Power Generation', image: '/images/clients/cauvery-power.webp' },
+  { id: 'cetex', name: 'Cetex Petrochemicals', image: '/images/clients/cetex.webp' },
+  { id: 'godavari', name: 'Godavari Bio Fertilizer Industries', image: '/images/clients/godavari-bio-fertilizer.webp' },
+  { id: 'greensol', name: 'Greensol Power Solutions', image: '/images/clients/greensol-power.webp' },
+  { id: 'ind-barath', name: 'Ind-Barath Power Gencom', image: '/images/clients/ind-barath-power.webp' },
+  { id: 'kanishk', name: 'Kanishk Steel', image: '/images/clients/kanishk-steel.webp' },
+  { id: 'keerthi', name: 'Keerthi Chemicals', image: '/images/clients/keerthi-chemicals.webp' },
+  { id: 'kothari', name: 'Kothari Sugars', image: '/images/clients/kothari-sugars.webp' },
+  { id: 'loyal', name: 'Loyal Textile', image: '/images/clients/loyal-textile.webp' },
+  { id: 'maharashtra-distillery', name: 'Maharashtra Distillery', image: '/images/clients/maharashtra-distillery.webp' },
+  { id: 'malladi', name: 'Malladi Drugs & Pharmaceuticals', image: '/images/clients/malladi-drugs.webp' },
+  { id: 'rishabh', name: 'Rishabh Engineering', image: '/images/clients/rishabh-engineering.webp' },
+  { id: 'siscol', name: 'SISCOL', image: '/images/clients/siscol.webp' },
+  { id: 'southern-structurals', name: 'Southern Structurals', image: '/images/clients/southern-structurals.webp' },
+  { id: 'tanfag', name: 'TANFAG Industries', image: '/images/clients/tanfag.webp' },
+  { id: 'thermal-systems', name: 'Thermal Systems', image: '/images/clients/thermal-systems.webp' },
+  { id: 'reliance', name: 'Reliance Industries', image: null },
   { id: 'sterlite', name: 'Sterlite Industries', image: null },
-  { id: 'srhhl', name: 'Rayalaseema Hi-Strength Hypo (SRHHL)', image: null },
-  { id: 'kamar', name: 'Kamar Chemicals', image: null },
 ];
 
 const logoPartners = clientPartners.filter((client) => client.image);
 const textPartners = clientPartners.filter((client) => !client.image);
+
+// Each marquee row carries its own share of the logos.
+const logoRows = [
+  { className: 'move-left' },
+  { className: 'move-right' },
+  { className: 'move-left-alt' },
+  { className: 'move-right-alt' },
+].map((row, rowIndex, rows) => ({
+  ...row,
+  clients: logoPartners.filter((_, index) => index % rows.length === rowIndex),
+}));
 
 const clientReferences = [
   'Tata Steel Ltd',
@@ -851,41 +894,15 @@ function Home({ onSelectProject }) {
           <p>Our work has earned the confidence of national institutions and leading industrial companies across India.</p>
         </div>
         <div className="client-marquee-container" data-reveal>
-          {/* Row 1: Moves Left */}
-          <div className="client-track">
-            <div className="client-marquee move-left">
-              {[...logoPartners, ...logoPartners, ...logoPartners, ...logoPartners].map((client, index) => (
-                <ClientLogo client={client} key={`r1-${client.id}-${index}`} />
-              ))}
+          {logoRows.map((row) => (
+            <div className="client-track" key={row.className}>
+              <div className={`client-marquee ${row.className}`}>
+                {[...row.clients, ...row.clients, ...row.clients, ...row.clients].map((client, index) => (
+                  <ClientLogo client={client} key={`${row.className}-${client.id}-${index}`} />
+                ))}
+              </div>
             </div>
-          </div>
-
-          {/* Row 2: Moves Right */}
-          <div className="client-track">
-            <div className="client-marquee move-right">
-              {[...logoPartners.slice().reverse(), ...logoPartners.slice().reverse(), ...logoPartners.slice().reverse(), ...logoPartners.slice().reverse()].map((client, index) => (
-                <ClientLogo client={client} key={`r2-${client.id}-${index}`} />
-              ))}
-            </div>
-          </div>
-
-          {/* Row 3: Moves Left */}
-          <div className="client-track">
-            <div className="client-marquee move-left-alt">
-              {[...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2), ...logoPartners.slice(2), ...logoPartners.slice(0, 2)].map((client, index) => (
-                <ClientLogo client={client} key={`r3-${client.id}-${index}`} />
-              ))}
-            </div>
-          </div>
-
-          {/* Row 4: Moves Right */}
-          <div className="client-track">
-            <div className="client-marquee move-right-alt">
-              {[...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4), ...logoPartners.slice(4), ...logoPartners.slice(0, 4)].map((client, index) => (
-                <ClientLogo client={client} key={`r4-${client.id}-${index}`} />
-              ))}
-            </div>
-          </div>
+          ))}
         </div>
         <p className="client-text-list section" data-reveal>
           <span>Also trusted by</span>

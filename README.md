@@ -156,8 +156,8 @@ Footer copy: “Trusted by leading national institutions and industrial conglome
 ### 4. Trusted by industry leaders: “Built with the *best in business.*”
 
 - Intro: “Our work has earned the confidence of national institutions and leading industrial companies across India.”
-- Client logos: **ISRO, Birla Carbon, Parrys (E.I.D.-Parry), Epsilon Carbon, Reliance Industries**.
-- **Four marquee rows** that alternate direction (left, right, left, right). Each row starts from a different point in the logo list so the rows don't line up. Logos are shown in black and white.
+- **44 client logos**, listed in `clientPartners`. Clients without a logo (**Reliance Industries, Sterlite Industries**) appear as text under “Also trusted by”.
+- **Four marquee rows** that alternate direction (left, right, left, right). The logos are shared out across the rows, so each row shows different clients. Logos are shown in full colour.
 
 ### 5. What we do: “Strength at *every scale.*”
 
@@ -503,7 +503,8 @@ The project brief category options are:
 | KB logo | `public/images/kutty-logo.jpg` | Header, footer, favicon, OG image |
 | Founder portrait | `public/images/ismail-founder.jpeg` | About → Our beginning |
 | CEO portrait | `public/images/riyas-ceo.jpeg` | About → Leadership |
-| Client logos | `public/images/clients/` (`isro.png`, `birla-carbon.png`, `parrys.png`, `epsilon-carbon.jpg`, `reliance.png`) | Home → Trusted by industry leaders |
+| Client logos | `public/images/clients/` (44 web-named `.webp` files) | Home → Trusted by industry leaders |
+| Original client logos | `public/images/new client/Customer Logo/` | Source originals (not referenced by the code) |
 | Equipment photos | `public/images/equipment/` (`winch`, `jack`, `roller`, `welder`, `tankjack`, `compressor`) | Equipment grid, About timeline |
 | Manufacturing photos | `public/images/manufac/` (29 web-named files) | Manufacturing/IBR catalogue, Projects sector cards, About timeline |
 | Original manufacturing photos | `public/images/manufac images/` | Source originals (not referenced by the code) |
